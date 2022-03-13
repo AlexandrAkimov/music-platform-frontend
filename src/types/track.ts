@@ -11,5 +11,6 @@ export interface ITrack {
   text: string;
   picture: string;
   audio: string;
-  comments: IComment[]
+  likes: number;
+  comments: IComment[];
 }

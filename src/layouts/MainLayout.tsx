@@ -4,7 +4,8 @@ import {
   MenuUnfoldOutlined,
   MenuFoldOutlined,
   UserOutlined,
-  VideoCameraOutlined
+  VideoCameraOutlined,
+  PlusOutlined
 } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 
@@ -28,7 +29,10 @@ const MainLayout:React.FC = ({children}) => {
             <Link to={'/'}>Главная</Link>
           </Menu.Item>
           <Menu.Item key="2" icon={<VideoCameraOutlined />}>
-            <Link to={'/about'}>Список треков</Link>
+            <Link to={'/tracks'}>Список треков</Link>
+          </Menu.Item>
+          <Menu.Item key="3" icon={<PlusOutlined />}>
+            <Link to={'/track/create'}>Создать трек</Link>
           </Menu.Item>
         </Menu>
       </Sider>

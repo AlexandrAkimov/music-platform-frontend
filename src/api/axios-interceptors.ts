@@ -3,7 +3,7 @@ import axios, { AxiosRequestConfig } from 'axios'
 const $api_uri = 'http://localhost:5000/'
 
 const $host = axios.create({
-  baseURL: `${$api_uri}api`
+  baseURL: $api_uri + 'auth/'
 })
 
 const $authHost = axios.create({

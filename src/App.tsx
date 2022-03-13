@@ -5,7 +5,7 @@ import {
   Route,
   Routes,
 } from "react-router-dom";
-import About from "./pages/About";
+import Tracks from "./pages/Tracks";
 import Home from "./pages/Home";
 import AuthLayout from "./layouts/AuthLayout";
 import Auth from './pages/Auth';
@@ -13,6 +13,8 @@ import { useTypedSelector } from './hooks/useTypedSelector';
 import { useActions } from './hooks/useActions';
 import RouteHistory from './RouteHistory';
 import history from './history';
+import Track from './pages/Track';
+import TrackForm from './components/TrackForm';
 
 interface ProvideAuthProps {
   component: any
@@ -35,7 +37,9 @@ function App() {
   const routes = (
     <Routes>
       <Route path="/" element={<ProvideAuth component={<Home />} />}></Route>
-      <Route path="/about" element={<ProvideAuth component={<About />} />}></Route>
+      <Route path="/tracks" element={<ProvideAuth component={<Tracks />} />}></Route>
+      <Route path="/track/:id" element={<ProvideAuth component={<Track />} />}></Route>
+      <Route path="/track/create" element={<ProvideAuth component={<TrackForm />} />}></Route>
       <Route path="/login" element={<Auth />} ></Route>
     </Routes>
   )

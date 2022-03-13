@@ -1,18 +1,22 @@
 import React from 'react'
 import { List, Avatar } from 'antd';
-import { PlayCircleOutlined, LikeOutlined, MessageOutlined, DeleteOutlined, EditOutlined } from '@ant-design/icons';
+import { PlayCircleOutlined, LikeOutlined, MessageOutlined, DeleteOutlined, EditOutlined, PauseCircleOutlined } from '@ant-design/icons';
 import { ITrack } from '../types/track'
+import { useNavigate } from 'react-router-dom';
+import { $api_uri } from '../api/axios-interceptors';
 
 interface TrackListProps {
   tracks: ITrack[]
+  active?: boolean
 }
 
 interface IconTextProps {
   text?: string | number;
 }
 
-const TrackList: React.FC<TrackListProps> = ({ tracks }) => {
+const TrackList: React.FC<TrackListProps> = ({ tracks, active }) => {
 
+  const navigate = useNavigate()
   const IconText: React.FC<IconTextProps> = ({ text, children }) => (
     <span className='item-action-list'>
       <span style={{ marginRight: text ? 8 : 0 }}>
@@ -21,6 +25,13 @@ const TrackList: React.FC<TrackListProps> = ({ tracks }) => {
       {text}
     </span>
   );
+
+  const play = (e: any): void => {
+    e.stopPropagation();
+  }
+  const pause = (e: any): void => {
+    e.stopPropagation()
+  }
 
   return (
     <List
@@ -35,10 +46,11 @@ const TrackList: React.FC<TrackListProps> = ({ tracks }) => {
       dataSource={tracks}
       renderItem={item => (
         <List.Item
+          onClick={() => navigate('/track/' + item._id)}
           key={item._id}
           actions={[
             <IconText key="list-vertical-star-o">
-              <PlayCircleOutlined />
+              {!active ? <PlayCircleOutlined onClick={play}/> : <PauseCircleOutlined onClick={pause}/>}
             </IconText>,
             <IconText text="0" key="list-vertical-like-o">
               <LikeOutlined />
@@ -58,7 +70,7 @@ const TrackList: React.FC<TrackListProps> = ({ tracks }) => {
           }
         >
           <List.Item.Meta
-            avatar={<Avatar src={item.picture} />}
+            avatar={<Avatar src={`${$api_uri + item.picture}`} size={50}/>}
             title={<span>{item.name}</span>}
             description={item.text}
           />
