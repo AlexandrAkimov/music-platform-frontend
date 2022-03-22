@@ -20,7 +20,7 @@ const initialState: TrackState = {
 export const trackReducer = (state = initialState, action: TrackAction): TrackState => {
   switch (action.type) {
     case TrackActionTypes.TRACKS:
-      return { loading: true, error: null, tracks: [], track: initialState.track }
+      return { ...state, loading: true, error: null }
     case TrackActionTypes.TRACKS_SUCCESS:
       return { loading: false, error: null, tracks: action.payload, track: initialState.track }
     case TrackActionTypes.TRACKS_ERROR:
@@ -29,7 +29,7 @@ export const trackReducer = (state = initialState, action: TrackAction): TrackSt
       return { ...state, loading: false, error: null, track: action.payload }
     case TrackActionTypes.TRACK_CREATE:
       return { loading: false, error: null, track: initialState.track, tracks: [...state.tracks, action.payload] }
-    case TrackActionTypes.TRACK_DELETE:
+    case TrackActionTypes.TRACK_DELETE:   
       return { loading: false, error: null, track: initialState.track, tracks: state.tracks.filter(track => track._id !== action.payload) }
     case TrackActionTypes.TRACK_UPDATE:
       return { loading: false, error: null, track: initialState.track, tracks: state.tracks.map(track => {
