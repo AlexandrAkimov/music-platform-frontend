@@ -1,11 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { List, Avatar } from 'antd';
 import { ITrack } from '../types/track'
 import { useNavigate } from 'react-router-dom';
 import { $api_uri } from '../api/axios-interceptors';
 import { useActions } from './../hooks/useActions';
 import TrackItem from './TrackItem';
-import { useTypedSelector } from './../hooks/useTypedSelector';
+import { useTypedSelector } from '../hooks/useTypedSelector';
 
 interface TrackListProps {
   tracks: ITrack[]
@@ -14,8 +14,10 @@ interface TrackListProps {
 
 
 const TrackList: React.FC<TrackListProps> = ({ tracks }) => {
-  const {deleteTrack, setActiveTrack, playTrack, pauseTrack} = useActions()
+  const [trackId, setTrackId] = useState<string>('null')
+
   const {pause} = useTypedSelector(state => state.player)
+  const {deleteTrack, setActiveTrack, playTrack, pauseTrack} = useActions()
   const navigate = useNavigate()
   
 
@@ -47,11 +49,13 @@ const TrackList: React.FC<TrackListProps> = ({ tracks }) => {
           key={item._id}
           actions={[
             <TrackItem 
-              isActive={pause}
+              isPaused={pause}
+              trackId={trackId}
               item={item}
               onPlay={play}
               onPause={paused}
               onRemove={remove}
+              changeTrack={setTrackId}
             />
           ]}
           

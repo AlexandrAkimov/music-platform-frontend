@@ -2,13 +2,15 @@ export interface UserState {
   token: string;
   loading: boolean;
   error: string | null,
-  isAuth: boolean
+  isAuth: boolean,
+  username: string
 }
 
 export enum UserActionTypes {
   AUTH_USER = 'AUTH_USER',
   AUTH_USER_SUCCESS = 'AUTH_USER_SUCCESS',
   AUTH_USER_ERROR = 'AUTH_USER_ERROR',
+  AUTH_USER_SET_USERNAME = 'AUTH_USER_SET_USERNAME'
 }
 
 interface AuthUserAction {
@@ -25,4 +27,9 @@ interface AuthUserErrorAction {
   payload: string
 }
 
-export type UserAction = AuthUserAction | AuthUserSuccessAction | AuthUserErrorAction
+interface AuthUserSetUsername {
+  type: UserActionTypes.AUTH_USER_SET_USERNAME;
+  payload: string
+}
+
+export type UserAction = AuthUserAction | AuthUserSuccessAction | AuthUserErrorAction | AuthUserSetUsername

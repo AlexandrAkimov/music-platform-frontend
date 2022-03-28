@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import { Layout, Menu } from 'antd';
 import {
   MenuUnfoldOutlined,
@@ -9,13 +9,13 @@ import {
 } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 import Player from '../components/Player';
+import { useTypedSelector } from '../hooks/useTypedSelector';
 
 const { Header, Sider, Content } = Layout;
 
 const MainLayout: React.FC = ({ children }) => {
   const [collapsed, setCollapsed] = useState(false)
-
-
+  const {username} = useTypedSelector(state => state.user)
   const toggle = () => {
     setCollapsed(prev => !prev)
   };
@@ -38,8 +38,9 @@ const MainLayout: React.FC = ({ children }) => {
           </Menu>
         </Sider>
         <Layout className="site-layout">
-          <Header className="site-layout-background" style={{ padding: '0 15px' }}>
+          <Header className="site-layout-background" style={{ padding: '0 15px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             {collapsed ? <MenuUnfoldOutlined onClick={toggle} style={{ fontSize: 20 }} /> : <MenuFoldOutlined style={{ fontSize: 20 }} onClick={toggle} />}
+            <strong style={{fontSize: 20}}>{username}</strong>
           </Header>
           <Content
             className="site-layout-background"

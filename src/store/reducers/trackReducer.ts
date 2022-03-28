@@ -10,7 +10,7 @@ const initialState: TrackState = {
     text: '',
     picture: '',
     audio: '',
-    likes: 0,
+    likes: [],
     comments: []
   },
   loading: false,
@@ -37,6 +37,13 @@ export const trackReducer = (state = initialState, action: TrackAction): TrackSt
         return track
       }) 
     }
+    case TrackActionTypes.TRACK_LIKE:   
+      return { ...state, loading: false, error: null, tracks: state.tracks.map(track => {
+        if (track._id === action.payload.id) {
+          track.likes = action.payload.likes
+        }
+        return track
+      })}
     default:
       return state
   }

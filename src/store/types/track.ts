@@ -14,7 +14,13 @@ export enum TrackActionTypes {
   TRACK_GET_ONE = 'TRACK_GET_ONE',
   TRACK_CREATE = 'TRACK_CREATE',
   TRACK_UPDATE = 'TRACK_UPDATE',
-  TRACK_DELETE = 'TRACK_DELETE'
+  TRACK_DELETE = 'TRACK_DELETE',
+  TRACK_LIKE = 'TRACK_LIKE'
+}
+
+interface LikeType {
+  id: string
+  likes: Array<string>
 }
 
 interface TracksAction {
@@ -51,4 +57,9 @@ interface TrackUpdateAction {
   payload: ITrack
 }
 
-export type TrackAction = TracksAction | TracksSuccessAction | TracksErrorAction | TrackGetOneAction | TrackDeleteAction | TrackCreateAction | TrackUpdateAction
+interface TrackLikeAction {
+  type: TrackActionTypes.TRACK_LIKE;
+  payload: LikeType
+}
+
+export type TrackAction = TracksAction | TracksSuccessAction | TracksErrorAction | TrackGetOneAction | TrackDeleteAction | TrackCreateAction | TrackUpdateAction | TrackLikeAction
