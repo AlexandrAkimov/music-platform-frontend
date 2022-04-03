@@ -3,6 +3,8 @@ import { PlayCircleOutlined, LikeOutlined, MessageOutlined, DeleteOutlined, Edit
 import { ITrack } from "../types/track";
 import { useActions } from './../hooks/useActions';
 import { useTypedSelector } from "../hooks/useTypedSelector";
+import { useNavigate } from "react-router-dom";
+import { Modal } from "antd";
 
 
 interface TrackItemProps {
@@ -30,8 +32,10 @@ const IconText: React.FC<IconTextProps> = ({ text, children }) => (
 const TrackItem: FC<TrackItemProps> = ({item, trackId, isPaused, changeTrack, onPlay, onPause, onRemove}) => {
 
   const [active, setActive] = useState(false);
+  const [isModalVisible, setIsModalVisible] = useState(false);
   const {likeTrack} = useActions()
   const {username} = useTypedSelector(state => state.user)
+  const navigate = useNavigate()
 
   const play = (e: React.MouseEvent, id: string) => {
     e.stopPropagation()
@@ -55,6 +59,11 @@ const TrackItem: FC<TrackItemProps> = ({item, trackId, isPaused, changeTrack, on
     e.stopPropagation()
     likeTrack(item._id, username)
   }
+
+  const handleOk = () => {
+
+  }
+
   return (
     <>
       {!active || item._id !== trackId || isPaused ? 
@@ -71,14 +80,19 @@ const TrackItem: FC<TrackItemProps> = ({item, trackId, isPaused, changeTrack, on
         <LikeOutlined onClick={like} />
       </IconText>
       <IconText text={`${item.comments.length}`} key="list-vertical-message">
-        <MessageOutlined />
+        <MessageOutlined onClick={() => setIsModalVisible(prev => !prev)}/>
       </IconText>
       <IconText key="list-vertical-edit">
-        <EditOutlined />
+        <EditOutlined onClick={() => navigate('/track/' + item._id)}/>
       </IconText>
       <IconText key="list-vertical-delete">
         <DeleteOutlined onClick={(e) => remove(e)} />
       </IconText>
+      <Modal title="Добавить комментарий" visible={isModalVisible} onOk={handleOk} onCancel={() => setIsModalVisible(false)} destroyOnClose>
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+      </Modal>
     </>
   )
 }

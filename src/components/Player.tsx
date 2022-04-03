@@ -64,6 +64,11 @@ const Player: FC = () => {
     }
   }
 
+  const formatTime = (second: number): string => {
+    const min = Math.floor(second / 60) < 10 ? '0' + Math.floor(second / 60) :  Math.floor(second / 60)
+    const sec = second % 60 < 10 ? '0' + second % 60 : second % 60
+    return min + ' : ' + sec
+  }
 
   return (
     <div className='player'>
@@ -76,7 +81,12 @@ const Player: FC = () => {
           <span style={{ whiteSpace: 'nowrap' }}>{active?.name}</span>
           <div><small style={{ whiteSpace: 'nowrap', color: '#eee' }}>{active?.artist}</small></div>
         </div>
-        <TrackProgress left={currentTime} right={duration} onChange={changeCurrentTime} />
+        <TrackProgress 
+          left={currentTime} 
+          right={duration}
+          showLeft={formatTime(currentTime)} 
+          showRight={formatTime(duration)}
+          onChange={changeCurrentTime} />
       </div>
       <div style={{ display: 'flex', alignItems: 'center', width: '20%', marginLeft: 40 }}>
         <SoundOutlined style={{ color: '#fff', cursor: 'pointer', fontSize: '20px', marginLeft: 10 }} />

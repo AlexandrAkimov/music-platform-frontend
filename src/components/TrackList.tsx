@@ -18,9 +18,7 @@ const TrackList: React.FC<TrackListProps> = ({ tracks }) => {
 
   const {pause} = useTypedSelector(state => state.player)
   const {deleteTrack, setActiveTrack, playTrack, pauseTrack} = useActions()
-  const navigate = useNavigate()
   
-
   const play = (track: ITrack): void => {
     setActiveTrack(track)
     playTrack()
@@ -45,7 +43,6 @@ const TrackList: React.FC<TrackListProps> = ({ tracks }) => {
       dataSource={tracks}
       renderItem={item => (
         <List.Item
-          onClick={() => navigate('/track/' + item._id)}
           key={item._id}
           actions={[
             <TrackItem 
