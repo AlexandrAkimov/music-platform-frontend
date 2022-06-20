@@ -22,6 +22,7 @@ interface ProvideAuthProps {
 
 function App() {
   const {isAuth} = useTypedSelector(state => state.user)
+  const track = useTypedSelector(state => state.track.track)
   const {checkAuth} = useActions()
 
   const ProvideAuth: React.FC<ProvideAuthProps> = ({ component }) => {
@@ -39,7 +40,7 @@ function App() {
       <Route path="/" element={<ProvideAuth component={<Home />} />}></Route>
       <Route path="/tracks" element={<ProvideAuth component={<Tracks />} />}></Route>
       <Route path="/track/:id" element={<ProvideAuth component={<Track />} />}></Route>
-      <Route path="/track/create" element={<ProvideAuth component={<TrackForm />} />}></Route>
+      <Route path="/track/create" element={<ProvideAuth component={<TrackForm track={track}/>} />}></Route>
       <Route path="/login" element={<Auth />} ></Route>
     </Routes>
   )

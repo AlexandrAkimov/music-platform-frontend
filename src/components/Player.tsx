@@ -7,10 +7,9 @@ import { $api_uri } from '../api/axios-interceptors';
 
 let audio = new Audio();
 const Player: FC = () => {
-
+  
   const { active, currentTime, volume, duration, pause } = useTypedSelector(state => state.player)
-  const { tracks } = useTypedSelector(state => state.track)
-  const { pauseTrack, playTrack, setVolume, setCurrentTime, setDuration, setActiveTrack } = useActions()
+  const { pauseTrack, playTrack, setVolume, setCurrentTime, setDuration } = useActions()
 
   const play = () => {
     playTrack()
@@ -36,19 +35,13 @@ const Player: FC = () => {
     if (audio) {
       setAudio()
     }
-    
-
   }, [active])
 
   useEffect(() => {
     if (audio) {
-      if (pause) {
-        audio.pause()
-      } else {
-        audio.play()
-      }   
+      pause ? audio.pause() : audio.play() 
     }
-  }, [pause])
+  }, [pause, active])
 
   const setAudio = () => {
     if (active) {
@@ -71,7 +64,7 @@ const Player: FC = () => {
   }
 
   return (
-    <div className='player'>
+    <div className='player' style={{display: active ? 'flex' : 'none'}}>
       <div style={{ display: 'flex', alignItems: 'center', width: '70%' }}>
         {pause ?
           <PlayCircleOutlined style={{ color: '#fff', cursor: 'pointer', fontSize: '20px' }} onClick={play} /> :

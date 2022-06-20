@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { PlayCircleOutlined, LikeOutlined, MessageOutlined, DeleteOutlined, EditOutlined, PauseCircleOutlined } from '@ant-design/icons';
 import { ITrack } from "../types/track";
 import { useActions } from './../hooks/useActions';
@@ -8,10 +8,9 @@ import { Modal } from "antd";
 
 
 interface TrackItemProps {
-  isPaused: boolean
   trackId: string
   item: ITrack
-  onPlay: (item: ITrack) => void
+  onPlay: () => void
   onPause: () => void
   onRemove: (id: string) => void
   changeTrack: (id: string) => void
@@ -29,24 +28,30 @@ const IconText: React.FC<IconTextProps> = ({ text, children }) => (
   </span>
 );
 
-const TrackItem: FC<TrackItemProps> = ({item, trackId, isPaused, changeTrack, onPlay, onPause, onRemove}) => {
-
+const TrackItem: FC<TrackItemProps> = ({item, trackId, changeTrack, onPlay, onPause, onRemove}) => {
+  
   const [active, setActive] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const {likeTrack} = useActions()
+  const {likeTrack, setActiveTrack} = useActions()
   const {username} = useTypedSelector(state => state.user)
+  //const {pause} = useTypedSelector(state => state.player)
   const navigate = useNavigate()
-
+  
+  console.log('render');
+  
   const play = (e: React.MouseEvent, id: string) => {
     e.stopPropagation()
     setActive(true)
     changeTrack(id)
-    onPlay(item)
+    setActiveTrack(item)
+    onPlay()
   }
 
-  const pause = (e: React.MouseEvent) => {
+  const paused = (e: React.MouseEvent, id: string) => {
     e.stopPropagation()
     setActive(false)
+    changeTrack(id)
+    setActiveTrack(item)
     onPause()
   }
 
@@ -66,13 +71,12 @@ const TrackItem: FC<TrackItemProps> = ({item, trackId, isPaused, changeTrack, on
 
   return (
     <>
-      {!active || item._id !== trackId || isPaused ? 
-        <IconText key="list-vertical-star-o" >
-
+      {!active || item._id !== trackId
+        ? <IconText key="list-vertical-star-o" >
           <PlayCircleOutlined onClick={(e) => play(e, item._id)}/>
-        </IconText>
+          </IconText>
         : <IconText key="list-vertical-star-o" >
-            <PauseCircleOutlined onClick={(e) => pause(e)} />
+            <PauseCircleOutlined onClick={(e) => paused(e, item._id)} />
           </IconText>
       }
       

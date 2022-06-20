@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { List, Avatar } from 'antd';
 import { ITrack } from '../types/track'
 import { useNavigate } from 'react-router-dom';
@@ -16,11 +16,9 @@ interface TrackListProps {
 const TrackList: React.FC<TrackListProps> = ({ tracks }) => {
   const [trackId, setTrackId] = useState<string>('null')
 
-  const {pause} = useTypedSelector(state => state.player)
-  const {deleteTrack, setActiveTrack, playTrack, pauseTrack} = useActions()
+  const {deleteTrack, playTrack, pauseTrack} = useActions()
   
-  const play = (track: ITrack): void => {
-    setActiveTrack(track)
+  const play = (): void => {
     playTrack()
   }
   const paused = (): void => {
@@ -30,6 +28,9 @@ const TrackList: React.FC<TrackListProps> = ({ tracks }) => {
     deleteTrack(id)
   }
 
+  console.log('list');
+  
+    
   return (
     <List
       itemLayout="vertical"
@@ -46,7 +47,6 @@ const TrackList: React.FC<TrackListProps> = ({ tracks }) => {
           key={item._id}
           actions={[
             <TrackItem 
-              isPaused={pause}
               trackId={trackId}
               item={item}
               onPlay={play}
@@ -62,8 +62,8 @@ const TrackList: React.FC<TrackListProps> = ({ tracks }) => {
             title={<span>{item.name}</span>}
             description={item.text}
           />
-          {item.artist}
-        </List.Item>
+            {item.artist}
+          </List.Item>
       )}
     />
   )

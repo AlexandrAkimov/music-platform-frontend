@@ -10,7 +10,7 @@ const Track: React.FC = () => {
   const tracks = useTypedSelector(state => state.track.tracks)
   const { Meta } = Card
   const {id} = useParams()
-  const track = tracks.find(track => track._id === id)
+  const track = tracks.find(track => track._id === id)!
   return (
     <Row gutter={[16, 16]}>
       <Col span={6} xs={{ order: 1 }} sm={{ order: 2 }} md={{ order: 3 }} lg={{ order: 4 }}>
@@ -34,7 +34,7 @@ const Track: React.FC = () => {
         </Card>
       </Col>
       <Col span={8} xs={{ order: 1 }} sm={{ order: 2 }} md={{ order: 3 }} lg={{ order: 4 }}>
-        <TrackForm />
+        <TrackForm track={track}/>
       </Col>
     </Row>
   )

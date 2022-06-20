@@ -5,8 +5,13 @@ import Uploader from './Uploader'
 import { $authHost } from '../api/axios-interceptors'
 import { useParams, useNavigate } from 'react-router-dom';
 import { useActions } from './../hooks/useActions';
+import { ITrack } from '../types/track'
 
-const TrackForm: React.FC = () => {
+interface TrackFormProps {
+  track: ITrack
+}
+
+const TrackForm: React.FC<TrackFormProps> = ({track}) => {
   const {id} = useParams()
   const {addTrack} = useActions()
   const navigate = useNavigate()
@@ -48,19 +53,22 @@ const TrackForm: React.FC = () => {
         <Input 
           placeholder="Название трека" 
           prefix={<CheckOutlined />} 
+          defaultValue={track.name}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => setName(e.target.value)}
         />
       </Form.Item>
 
       <Form.Item label="Исполнитель" labelCol={{span: 24}} required>
         <Input 
+          defaultValue={track.artist}
           placeholder="Исполнитель" 
           prefix={<UserOutlined />} 
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => setArtist(e.target.value)}/>
       </Form.Item>
       
       <Form.Item label="Текст песни" labelCol={{span: 24}}>
-        <TextArea 
+        <TextArea
+          defaultValue={track.text} 
           placeholder="текст песни" 
           allowClear 
           onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setText(e.target.value)}

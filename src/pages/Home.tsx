@@ -1,5 +1,5 @@
 import React from 'react'
-
+import TracksCarousel from '../components/Carousel'
 
 const Home: React.FC = () => {
 
@@ -7,7 +7,7 @@ const Home: React.FC = () => {
 
   return (
     <>
-      <h1>My Tracks</h1>
+      <TracksCarousel />
     </>
   )
   

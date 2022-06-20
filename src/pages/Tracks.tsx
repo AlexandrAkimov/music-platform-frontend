@@ -9,6 +9,7 @@ const Tracks: React.FC = () => {
   useEffect(() => {
     getTracks()
   }, [])
+  
   return ( 
     <>
       <h1>My Tracks</h1>

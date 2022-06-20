@@ -19,7 +19,7 @@ const MainLayout: React.FC = ({ children }) => {
   const toggle = () => {
     setCollapsed(prev => !prev)
   };
-
+  
 
   return (
       <Layout style={{ height: '100vh' }}>
